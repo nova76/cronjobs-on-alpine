@@ -1,0 +1,12 @@
+version: "3"
+services:
+  worker_without_dockerfile:
+    container_name: without_dockerfile
+    image: alpine:3.6
+    volumes:
+      - ./worker/cronjobs:/etc/crontabs/root
+    command: ash -c "cat /etc/crontabs/root && crond -f -d 8"
+  worker_with_dockerfile:
+    container_name: with_dockerfile
+    build : ./worker
+    command: ash -c "cat /etc/crontabs/root && crond -f -d 8"
